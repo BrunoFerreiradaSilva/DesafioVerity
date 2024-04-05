@@ -5,5 +5,5 @@ import com.example.desafioverity.domain.helpers.DataState
 import kotlinx.coroutines.flow.Flow
 
 interface UsersRepository {
-    fun getAllUsers(): Flow<DataState<List<UserEntity>>>
+    fun getAllUsers(page:Int): Flow<DataState<List<UserEntity>>>
 }
