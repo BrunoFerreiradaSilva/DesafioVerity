@@ -11,8 +11,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 data class UserUiData(
-    val users: List<User>,
-    val page: Int = 1
+    val users: List<User>
 )
 
 @HiltViewModel
@@ -21,20 +20,18 @@ class UserViewModel @Inject constructor(private val useCase: UserUseCase) : View
         MutableStateFlow(UserUiData(users = emptyList()))
     val uiState = _uiState.asStateFlow()
 
-    init {
+     fun getAllUsers() {
         viewModelScope.launch {
-            useCase.invoke(_uiState.value.page).collect(::getAllUsers)
-        }
-    }
-
-    private fun getAllUsers(state: DataState<List<User>>) {
-        when (state) {
-            is DataState.Data -> {
-                _uiState.value = _uiState.value.copy(users = state.data)
+            useCase.invoke().collect{state ->
+                when (state) {
+                    is DataState.Data -> {
+                        _uiState.value = _uiState.value.copy(users = state.data)
+                    }
+                    is DataState.Error -> {}
+                    is DataState.Loading -> {}
+                }
             }
-
-            is DataState.Error -> {}
-            is DataState.Loading -> {}
         }
+
     }
 }

@@ -25,7 +25,6 @@ class UserDetailViewModel @Inject constructor(
         MutableStateFlow(UserDetailUiData(repos = emptyList()))
     val uiState = _uiState.asStateFlow()
 
-
     fun getDetailUser(name: String) {
         viewModelScope.launch {
             userDetailUseCase.invoke(name).collect { state ->

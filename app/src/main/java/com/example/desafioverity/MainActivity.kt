@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -34,43 +35,58 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    NavGraph(navHostController = navHostController)
+                    Navigation(navHostController)
                 }
+            }
+        }
+    }
+
+    @Composable
+    private fun Navigation(navHostController: NavHostController) {
+        NavHost(navController = navHostController, startDestination = Routes.Users.route) {
+            composable(
+                route = Routes.Users.route
+            ) {
+                val viewModel = hiltViewModel<UserViewModel>()
+                val state = viewModel.uiState.collectAsState()
+                LaunchedEffect(key1 = state) {
+                    viewModel.getAllUsers()
+                }
+
+                Users(state = state.value.users, Modifier, navigateToDetails = {
+                    navHostController.navigate("${Routes.Details.route}/torvalds") {
+                        navHostController.graph.startDestinationRoute?.let { route ->
+                            popUpTo(route) {
+                                saveState = true
+                            }
+                            launchSingleTop = true
+                            restoreState = true
+                        }
+                    }
+                }, updateUsers = {
+
+                }, searchUser = {})
+            }
+            composable(
+                route = "${Routes.Details.route}/{nameUser}"
+            ) {
+                val nameUser = it.arguments?.getString("nameUser")
+                val viewModel = hiltViewModel<UserDetailViewModel>()
+                val state = viewModel.uiState.collectAsState()
+                LaunchedEffect(key1 = state) {
+                    nameUser?.let { user ->
+                        viewModel.getDetailUser(user)
+                        viewModel.getAllRepos(user)
+                    }
+                }
+
+                UserDetail(
+                    user = state.value.user,
+                    repos = state.value.repos,
+                    modifier = Modifier
+                )
             }
         }
     }
 }
 
-@Composable
-fun NavGraph(navHostController: NavHostController) {
-    NavHost(navController = navHostController, startDestination = Routes.Users.route) {
-        composable(
-            route = Routes.Users.route
-        ) {
-            val viewModel = hiltViewModel<UserViewModel>()
-            val state = viewModel.uiState.collectAsState()
-            Users(state = state.value.users, Modifier, navigateToDetails = {
-                navHostController.navigate("${Routes.Details.route}/torvalds") {
-                    launchSingleTop = true
-                    restoreState = true
-                }
-            }) {
-
-            }
-        }
-        composable(
-            route = "${Routes.Details.route}/{nameUser}"
-        ) {
-            val nameUser = it.arguments?.getString("nameUser")
-            val viewModel = hiltViewModel<UserDetailViewModel>()
-            nameUser?.let { user ->
-                viewModel.getDetailUser(user)
-                viewModel.getAllRepos(user)
-            }
-            val state = viewModel.uiState.collectAsState()
-            UserDetail(user = state.value.user, repos = state.value.repos, modifier = Modifier) {
-
-            }
-        }
-    }
-}

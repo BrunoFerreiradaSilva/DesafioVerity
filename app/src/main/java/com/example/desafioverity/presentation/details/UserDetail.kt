@@ -41,8 +41,7 @@ import com.example.desafioverity.domain.helpers.showDataConvertingString
 fun UserDetail(
     user: UserDetail?,
     repos: List<Repos>,
-    modifier: Modifier,
-    goToRepositoryList: () -> Unit
+    modifier: Modifier
 ) {
     Column(modifier.padding(vertical = 8.dp, horizontal = 8.dp)) {
         Card(modifier.padding(bottom = 4.dp)) {
@@ -59,7 +58,7 @@ fun UserDetail(
                         .fillMaxWidth()
                         .padding(vertical = 14.dp)
                 ) {
-                    Row(modifier.padding(horizontal = 8.dp)) {
+                    Row(modifier.padding(horizontal = 8.dp, vertical = 8.dp)) {
                         user?.name?.let {
                             Text(
                                 text = it,
@@ -69,27 +68,13 @@ fun UserDetail(
                             )
                         }
                     }
-                    Row(modifier.padding(start = 8.dp, top = 8.dp)) {
-                        Icon(
-                            painterResource(id = R.drawable.icon_work), contentDescription = "",
-                            modifier
-                                .size(14.dp)
-                                .align(Alignment.CenterVertically)
-                        )
-                        user?.company?.let {
-                            Text(
-                                text = it,
-                                modifier = modifier
-                                    .align(Alignment.CenterVertically)
-                                    .padding(end = 8.dp),
-                                fontSize = 12.sp,
-                                textAlign = TextAlign.Center
-                            )
-                        }
+
+                    Row {
                         Icon(
                             imageVector = Icons.Default.LocationOn,
                             contentDescription = "",
                             modifier = modifier
+                                .padding(horizontal = 8.dp)
                                 .size(14.dp)
                                 .align(Alignment.CenterVertically)
                         )
@@ -183,18 +168,21 @@ fun UserDetail(
                     }
                     Row {
                         Row(modifier.padding(start = 8.dp, bottom = 8.dp)) {
-                            Icon(
-                                imageVector = Icons.Outlined.Check,
-                                contentDescription = "",
-                                modifier.size(14.dp),
-                                tint = Color.Gray
-                            )
-                            Text(
-                                text = it.language,
-                                modifier = modifier.padding(horizontal = 2.dp),
-                                textAlign = TextAlign.Center,
-                                fontSize = 12.sp
-                            )
+                            val language = if (it.language.isNullOrBlank()) "" else it.language
+                            if (language.isNotEmpty()) {
+                                Icon(
+                                    imageVector = Icons.Outlined.Check,
+                                    contentDescription = "",
+                                    modifier.size(14.dp),
+                                    tint = Color.Gray
+                                )
+                                Text(
+                                    text = language,
+                                    modifier = modifier.padding(horizontal = 2.dp),
+                                    textAlign = TextAlign.Center,
+                                    fontSize = 12.sp
+                                )
+                            }
                         }
                         Row(modifier.padding(start = 8.dp, bottom = 8.dp)) {
                             Icon(
@@ -274,7 +262,5 @@ fun PreviewUserDetail() {
         following = 2
     )
 
-    UserDetail(user = userDetail, repos = emptyList(), modifier = Modifier) {
-
-    }
+    UserDetail(user = userDetail, repos = emptyList(), modifier = Modifier)
 }

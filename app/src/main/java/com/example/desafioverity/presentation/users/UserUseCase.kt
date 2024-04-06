@@ -8,7 +8,7 @@ import javax.inject.Inject
 
 class UserUseCase @Inject constructor(private val usersRepository: UsersRepository) {
 
-    operator fun invoke(page: Int): Flow<DataState<List<User>>> {
-        return usersRepository.getAllUsers(page)
+    operator fun invoke(): Flow<DataState<List<User>>> {
+        return usersRepository.getAllUsers()
     }
 }
