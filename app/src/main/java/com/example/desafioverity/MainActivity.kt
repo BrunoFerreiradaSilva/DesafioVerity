@@ -53,8 +53,8 @@ class MainActivity : ComponentActivity() {
                     viewModel.getAllUsers()
                 }
 
-                Users(state = state.value.users, Modifier, navigateToDetails = {
-                    navHostController.navigate("${Routes.Details.route}/torvalds") {
+                Users(state = state.value.users, search = state.value.search, Modifier, navigateToDetails = { nameUser ->
+                    navHostController.navigate("${Routes.Details.route}/${nameUser}") {
                         navHostController.graph.startDestinationRoute?.let { route ->
                             popUpTo(route) {
                                 saveState = true
@@ -63,9 +63,9 @@ class MainActivity : ComponentActivity() {
                             restoreState = true
                         }
                     }
-                }, updateUsers = {
-
-                }, searchUser = {})
+                }, searchUser = {
+                    viewModel.searchUser(it)
+                })
             }
             composable(
                 route = "${Routes.Details.route}/{nameUser}"

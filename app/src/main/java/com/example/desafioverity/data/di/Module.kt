@@ -7,6 +7,7 @@ import com.example.desafioverity.data.repository.repos.ReposRepositoryImpl
 import com.example.desafioverity.data.repository.users.UserRepositoryImpl
 import com.example.desafioverity.data.repository.users.UsersRepository
 import com.example.desafioverity.data.service.Service
+import com.example.desafioverity.domain.helpers.BASE_URL
 import com.example.desafioverity.domain.helpers.BASE_URL2
 import dagger.Module
 import dagger.Provides

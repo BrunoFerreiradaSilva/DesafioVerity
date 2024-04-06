@@ -1,6 +1,7 @@
 package com.example.desafioverity.data.service
 
 import com.example.desafioverity.data.response.ReposDto
+import com.example.desafioverity.data.response.SearchDTO
 import com.example.desafioverity.data.response.UserDetailDto
 import com.example.desafioverity.data.response.UserDto
 import retrofit2.http.GET
@@ -23,4 +24,10 @@ interface Service {
     suspend fun getAllRepos(
         @Path("username") userName: String
     ): List<ReposDto>
+
+    @GET("/search/users")
+    suspend fun getUser(
+        @Query("q") name:String,
+        @Query("per_page") page: Int = 100
+    ): SearchDTO
 }

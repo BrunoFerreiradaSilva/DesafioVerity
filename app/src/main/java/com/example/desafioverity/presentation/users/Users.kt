@@ -37,9 +37,9 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 @Composable
 fun Users(
     state: List<User>,
+    search: List<User>,
     modifier: Modifier,
     navigateToDetails: (String) -> Unit,
-    updateUsers: () -> Unit,
     searchUser: (String) -> Unit
 ) {
     var text by remember { mutableStateOf("") }
@@ -53,7 +53,6 @@ fun Users(
             query = text,
             onQueryChange = { text = it },
             onSearch = {
-                active = false
                 searchUser(it)
             },
             active = active,
@@ -73,6 +72,7 @@ fun Users(
                         modifier = modifier.clickable {
                             if (text.isNotEmpty()) {
                                 text = ""
+                                searchUser("")
                             } else {
                                 active = false
                             }
@@ -83,42 +83,43 @@ fun Users(
                 }
             }
         ) {
-            val newUsers =
-                if (text.isNotBlank()) state.filter { it.login.contains(text) } else emptyList()
-            if (newUsers.isEmpty() && text.isNotBlank()) {
-                Icon(
-                    imageVector = Icons.Default.Clear,
-                    contentDescription = "empty list",
-                    modifier
-                        .fillMaxWidth()
-                        .padding(top = 50.dp)
-                        .size(50.dp)
-                )
-                Text(
-                    text = "Nenhum resultado encontrado.",
-                    textAlign = TextAlign.Center,
-                    modifier = modifier.fillMaxWidth()
-                )
-            } else if (newUsers.isEmpty()) {
-                Icon(
-                    imageVector = Icons.Default.Info,
-                    contentDescription = "empty list",
-                    modifier
-                        .fillMaxWidth()
-                        .padding(top = 50.dp)
-                        .size(50.dp)
-                )
-                Text(
-                    text = "Sua busca aparecerá aqui.",
-                    textAlign = TextAlign.Center,
-                    modifier = modifier.fillMaxWidth()
-                )
-            } else {
-                UserLazyColumComponent(users = newUsers, modifier = modifier) {
-                    navigateToDetails(it)
-                }
-
+            UserLazyColumComponent(users = search, modifier = modifier) {
+                navigateToDetails(it)
             }
+//            val newUsers =
+//                if (text.isNotBlank()) state.filter { it.login.contains(text) } else emptyList()
+//            if (newUsers.isEmpty() && text.isNotBlank()) {
+//                Icon(
+//                    imageVector = Icons.Default.Clear,
+//                    contentDescription = "empty list",
+//                    modifier
+//                        .fillMaxWidth()
+//                        .padding(top = 50.dp)
+//                        .size(50.dp)
+//                )
+//                Text(
+//                    text = "Nenhum resultado encontrado.",
+//                    textAlign = TextAlign.Center,
+//                    modifier = modifier.fillMaxWidth()
+//                )
+//            } else if (newUsers.isEmpty()) {
+//                Icon(
+//                    imageVector = Icons.Default.Info,
+//                    contentDescription = "empty list",
+//                    modifier
+//                        .fillMaxWidth()
+//                        .padding(top = 50.dp)
+//                        .size(50.dp)
+//                )
+//                Text(
+//                    text = "Sua busca aparecerá aqui.",
+//                    textAlign = TextAlign.Center,
+//                    modifier = modifier.fillMaxWidth()
+//                )
+//            } else {
+//
+//
+//            }
 
         }
 
@@ -140,13 +141,14 @@ fun PreviewUsers() {
         avatarUrl = "https://avatars.githubusercontent.com/u/1?v=4"
     )
     val userUiData = UserUiData(
-        users = listOf(users)
+        users = listOf(users),
+        search = listOf(users)
     )
 
     Users(
         state = userUiData.users,
+        search = userUiData.users,
         Modifier,
         navigateToDetails = {},
-        updateUsers = {},
         searchUser = {})
 }
