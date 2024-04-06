@@ -28,25 +28,28 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.example.desafioverity.R
-import com.example.desafioverity.data.model.UserDetail
 import com.example.desafioverity.domain.helpers.showDataConvertingString
+import com.example.desafioverity.presentation.stateScreen.error.ErrorScreenState
+import com.example.desafioverity.presentation.stateScreen.loading.UserDetailLoading
 
 @Composable
 fun UserDetail(
     state: UserDetailUiData,
-    modifier: Modifier
+    modifier: Modifier,
+    tryAgain: () -> Unit
 ) {
     if (state.isLoading){
         UserDetailLoading(modifier = modifier)
     }
 
     if (state.isError){
-
+        ErrorScreenState(modifier = modifier){
+            tryAgain()
+        }
     }
 
     if (state.isData) {
@@ -254,27 +257,4 @@ fun UserDetail(
             }
         }
     }
-
-}
-
-@Composable
-@Preview(showSystemUi = true)
-fun PreviewUserDetail() {
-
-    val user = UserDetail(
-        login = "",
-        avatarUrl = "",
-        name = "Bruno Ferreira",
-        company = "Verity",
-        location = "Florianopolis - SC",
-        publicRepos = 55,
-        followers = 7,
-        following = 2
-    )
-    val userDetail = UserDetailUiData(
-        user = user,
-        repos = listOf()
-    )
-
-    UserDetail(state = userDetail, modifier = Modifier)
 }

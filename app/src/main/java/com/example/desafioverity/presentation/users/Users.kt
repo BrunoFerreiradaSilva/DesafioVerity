@@ -18,10 +18,11 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.desafioverity.data.model.User
 import com.example.desafioverity.presentation.component.UserLazyColumComponent
+import com.example.desafioverity.presentation.stateScreen.error.ErrorScreenState
+import com.example.desafioverity.presentation.stateScreen.loading.SearchLoading
+import com.example.desafioverity.presentation.stateScreen.loading.UsersLoading
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -29,10 +30,17 @@ fun Users(
     state: UserUiData,
     modifier: Modifier,
     navigateToDetails: (String) -> Unit,
-    searchUser: (String) -> Unit
+    searchUser: (String) -> Unit,
+    tryAgain: () -> Unit
 ) {
     if (state.isLoading) {
         UsersLoading(modifier = modifier)
+    }
+
+    if (state.isError) {
+        ErrorScreenState(modifier = modifier) {
+            tryAgain()
+        }
     }
 
     if (state.isData) {
@@ -77,18 +85,20 @@ fun Users(
                     }
                 }
             ) {
-                if (state.isSearchData) {
-                    UserLazyColumComponent(users = state.search, modifier = modifier) {
-                        navigateToDetails(it)
-                    }
-                }
-                
                 if (state.isSearchLoading) {
                     SearchLoading(modifier = modifier)
                 }
 
                 if (state.isSearchError) {
+                    ErrorScreenState(modifier = modifier) {
+                        tryAgain()
+                    }
+                }
 
+                if (state.isSearchData) {
+                    UserLazyColumComponent(users = state.search, modifier = modifier) {
+                        navigateToDetails(it)
+                    }
                 }
             }
             UserLazyColumComponent(users = state.users, modifier = modifier) {
@@ -96,31 +106,5 @@ fun Users(
             }
         }
 
-        if (state.isError) {
-
-        }
-
     }
-}
-
-
-@Preview(showSystemUi = true)
-@Composable
-fun PreviewUsers() {
-    val users = User(
-        login = "Brunoooo",
-        id = 222,
-        nodeId = "UHASUHAUAHS",
-        avatarUrl = "https://avatars.githubusercontent.com/u/1?v=4"
-    )
-    val userUiData = UserUiData(
-        users = listOf(users),
-        search = listOf(users)
-    )
-
-    Users(
-        userUiData,
-        Modifier,
-        navigateToDetails = {},
-        searchUser = {})
 }

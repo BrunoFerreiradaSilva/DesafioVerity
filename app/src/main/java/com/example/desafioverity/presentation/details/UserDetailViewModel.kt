@@ -42,11 +42,11 @@ class UserDetailViewModel @Inject constructor(
                     }
 
                     is DataState.Error -> {
-                        _uiState.value = _uiState.value.copy(isError = true, isLoading = false)
+                        _uiState.value = _uiState.value.copy(isError = true, isLoading = false, isData = false)
                     }
 
                     is DataState.Loading -> {
-                        _uiState.value = _uiState.value.copy(isLoading = true)
+                        _uiState.value = _uiState.value.copy(isLoading = true, isError = false, isData = false)
                     }
                 }
             }

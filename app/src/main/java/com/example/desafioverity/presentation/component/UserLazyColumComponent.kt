@@ -15,6 +15,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
@@ -56,5 +57,31 @@ fun UserLazyColumComponent(
                 }
             }
         }
+    }
+}
+
+@Composable
+@Preview(showSystemUi = true)
+fun PreviewUserList() {
+    val users = listOf(
+        User(
+            login = "Bruno Ferreira",
+            id = 0,
+            nodeId = "",
+            avatarUrl = ""
+        ), User(
+            login = "Bianca Ferreira",
+            id = 0,
+            nodeId = "",
+            avatarUrl = ""
+        ), User(
+            login = "Olivio",
+            id = 0,
+            nodeId = "",
+            avatarUrl = ""
+        )
+    )
+    UserLazyColumComponent(users = users, modifier = Modifier) {
+
     }
 }

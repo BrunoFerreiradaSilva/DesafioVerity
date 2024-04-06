@@ -65,6 +65,8 @@ class MainActivity : ComponentActivity() {
                     }
                 }, searchUser = {
                     viewModel.searchUser(it)
+                }, tryAgain = {
+                    viewModel.getAllUsers()
                 })
             }
             composable(
@@ -83,7 +85,12 @@ class MainActivity : ComponentActivity() {
                 UserDetail(
                     state = state.value,
                     modifier = Modifier
-                )
+                ) {
+                    nameUser?.let { user ->
+                        viewModel.getDetailUser(user)
+                        viewModel.getAllRepos(user)
+                    }
+                }
             }
         }
     }
