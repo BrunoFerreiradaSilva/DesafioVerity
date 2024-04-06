@@ -1,31 +1,30 @@
 package com.example.desafioverity.presentation.details
 
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material.icons.filled.Person
-import androidx.compose.material.icons.outlined.Person
-import androidx.compose.material.icons.twotone.Person
+import androidx.compose.material.icons.filled.Star
+import androidx.compose.material.icons.outlined.Check
 import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
-import androidx.compose.material3.Shapes
+import androidx.compose.material3.ShapeDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -34,12 +33,17 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.example.desafioverity.R
-import com.example.desafioverity.data.model.User
+import com.example.desafioverity.data.model.Repos
 import com.example.desafioverity.data.model.UserDetail
-import com.example.desafioverity.presentation.users.Pagination
+import com.example.desafioverity.domain.helpers.showDataConvertingString
 
 @Composable
-fun UserDetail(user: UserDetail?, modifier: Modifier, goToRepositoryList: () -> Unit) {
+fun UserDetail(
+    user: UserDetail?,
+    repos: List<Repos>,
+    modifier: Modifier,
+    goToRepositoryList: () -> Unit
+) {
     Column(modifier.padding(vertical = 8.dp, horizontal = 8.dp)) {
         Card(modifier.padding(bottom = 4.dp)) {
             Row {
@@ -56,56 +60,47 @@ fun UserDetail(user: UserDetail?, modifier: Modifier, goToRepositoryList: () -> 
                         .padding(vertical = 14.dp)
                 ) {
                     Row(modifier.padding(horizontal = 8.dp)) {
-                        Text(
-                            text = "Name: ",
-                            modifier = modifier.align(Alignment.CenterVertically),
-                            fontSize = 14.sp,
-                            textAlign = TextAlign.Center,
-                            fontWeight = FontWeight.Bold
-                        )
                         user?.name?.let {
                             Text(
                                 text = it,
                                 modifier = modifier.align(Alignment.CenterVertically),
-                                fontSize = 14.sp,
+                                fontSize = 18.sp,
                                 textAlign = TextAlign.Center
                             )
                         }
                     }
-                    Row(modifier.padding(horizontal = 9.dp)) {
-                        Text(
-                            text = "Company: ",
-                            modifier = modifier.align(Alignment.CenterVertically),
-                            fontSize = 14.sp,
-                            textAlign = TextAlign.Center,
-                            fontWeight = FontWeight.Bold
-                        )
+                    Row(modifier.padding(start = 8.dp, top = 8.dp)) {
+                        Icon(painterResource(id = R.drawable.icon_work), contentDescription = "",
+                            modifier
+                                .size(14.dp)
+                                .align(Alignment.CenterVertically))
                         user?.company?.let {
                             Text(
                                 text = it,
-                                modifier = modifier.align(Alignment.CenterVertically),
-                                fontSize = 14.sp,
+                                modifier = modifier
+                                    .align(Alignment.CenterVertically)
+                                    .padding(end = 8.dp),
+                                fontSize = 12.sp,
                                 textAlign = TextAlign.Center
                             )
                         }
-                    }
-                    Row(modifier.padding(horizontal = 8.dp)) {
                         Icon(
                             imageVector = Icons.Default.LocationOn,
                             contentDescription = "",
                             modifier = modifier
-                                .size(16.dp)
+                                .size(14.dp)
                                 .align(Alignment.CenterVertically)
                         )
                         user?.location?.let {
                             Text(
                                 text = it,
                                 modifier = modifier.align(Alignment.CenterVertically),
-                                fontSize = 14.sp,
+                                fontSize = 12.sp,
                                 textAlign = TextAlign.Center
                             )
                         }
                     }
+
                 }
             }
             Row(modifier.padding(horizontal = 8.dp, vertical = 8.dp)) {
@@ -147,24 +142,93 @@ fun UserDetail(user: UserDetail?, modifier: Modifier, goToRepositoryList: () -> 
             }
         }
         LazyColumn(modifier = modifier.fillMaxWidth()) {
-            val repos = listOf("aaaaaaa","bbbbbbbb","ccccccccc")
             items(repos) {
                 Card(
                     modifier = modifier
-                        .clickable { goToRepositoryList()}
                         .fillMaxWidth()
                         .padding(vertical = 4.dp),
                     shape = RoundedCornerShape(8.dp),
                 ) {
-                    Row {
+                    Row(
+                        modifier
+                            .padding(vertical = 4.dp)
+                            .fillMaxWidth()){
                         Text(
-                            text = it,
+                            text = it.name,
                             modifier = modifier
-                                .fillMaxWidth()
-                                .padding(horizontal = 8.dp, vertical = 8.dp),
-                            textAlign = TextAlign.Justify
+                                .padding(horizontal = 10.dp, vertical = 2.dp),
+                            textAlign = TextAlign.Center
+                        )
+                        Spacer(modifier = modifier
+                            .weight(1f)
+                            .height(0.dp))
+                        Text(
+                            text = it.visibility,
+                            modifier = modifier
+                                .border(
+                                    width = 2.dp,
+                                    color = Color.Gray,
+                                    shape = ShapeDefaults.ExtraLarge
+                                )
+                                .padding(horizontal = 10.dp, vertical = 4.dp),
+                            textAlign = TextAlign.Center,
+                            fontSize = 10.sp
+                        )
+                        Spacer(modifier = modifier.padding(end = 12.dp))
+                    }
+                    Row {
+                        Row(modifier.padding(start = 8.dp, bottom = 8.dp)) {
+                            Icon(imageVector = Icons.Outlined.Check, contentDescription = "", modifier.size(14.dp), tint = Color.Gray)
+                            Text(
+                                text = it.language,
+                                modifier = modifier.padding(horizontal = 2.dp),
+                                textAlign = TextAlign.Center,
+                                fontSize = 12.sp
+                            )
+                        }
+                        Row(modifier.padding(start = 8.dp, bottom = 8.dp)) {
+                            Icon(painterResource(id = R.drawable.git_fork_svgrepo_com), contentDescription = "", modifier.size(14.dp), tint = Color.Gray)
+                            Text(
+                                text = it.forks.toString(),
+                                modifier = modifier.padding(horizontal = 2.dp),
+                                textAlign = TextAlign.Center,
+                                fontSize = 12.sp
+                            )
+                        }
+                        Row(modifier.padding(start = 8.dp, bottom = 8.dp)) {
+                            Icon(imageVector = Icons.Default.Star, contentDescription = "", modifier.size(14.dp), tint = Color.Gray)
+                            Text(
+                                text = it.size.toString(),
+                                modifier = modifier.padding(horizontal = 2.dp),
+                                textAlign = TextAlign.Center,
+                                fontSize = 12.sp
+                            )
+                        }
+                        Row(modifier.padding(start = 8.dp, bottom = 8.dp)) {
+                            Icon(painterResource(id = R.drawable.icon_eye), contentDescription = "", modifier.size(14.dp), tint = Color.Gray)
+                            Text(
+                                text = it.watchers.toString(),
+                                modifier = modifier.padding(horizontal = 2.dp),
+                                textAlign = TextAlign.Center,
+                                fontSize = 12.sp
+                            )
+                        }
+                    }
+                    Row(modifier.padding(start = 8.dp, bottom = 8.dp)) {
+                        Text(
+                            text = "Update on",
+                            modifier = modifier.padding(horizontal = 2.dp),
+                            textAlign = TextAlign.Center,
+                            fontSize = 12.sp
+                        )
+                        Text(
+                            text = it.updatedAt.showDataConvertingString(),
+                            modifier = modifier.padding(horizontal = 2.dp),
+                            textAlign = TextAlign.Center,
+                            fontSize = 12.sp
                         )
                     }
+
                 }
             }
         }
@@ -184,7 +248,8 @@ fun PreviewUserDetail() {
         followers = 7,
         following = 2
     )
-    UserDetail(user = userDetail, modifier = Modifier) {
+
+    UserDetail(user = userDetail, repos = emptyList(), modifier = Modifier) {
 
     }
 }
