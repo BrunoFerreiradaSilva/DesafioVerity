@@ -12,7 +12,13 @@ import javax.inject.Inject
 
 data class UserUiData(
     val users: List<User>,
-    val search: List<User>
+    val search: List<User>,
+    val isData: Boolean = false,
+    val isLoading: Boolean = true,
+    val isError: Boolean = false,
+    val isSearchData:Boolean= false,
+    val isSearchLoading:Boolean= false,
+    val isSearchError:Boolean= false
 )
 
 @HiltViewModel
@@ -31,10 +37,23 @@ class UserViewModel @Inject constructor(
                 when (state) {
                     is DataState.Data -> {
                         currentUsers.addAll(state.data)
-                        _uiState.value = _uiState.value.copy(users = state.data)
+                        _uiState.value = _uiState.value.copy(
+                            users = state.data,
+                            isData = true,
+                            isLoading = false,
+                            isError = false
+                        )
                     }
-                    is DataState.Error -> {}
-                    is DataState.Loading -> {}
+
+                    is DataState.Error -> {
+                        _uiState.value =
+                            _uiState.value.copy(isError = true, isLoading = false, isData = false)
+                    }
+
+                    is DataState.Loading -> {
+                        _uiState.value =
+                            _uiState.value.copy(isLoading = true, isError = false, isData = false)
+                    }
                 }
             }
         }
@@ -49,10 +68,24 @@ class UserViewModel @Inject constructor(
                     when (state) {
                         is DataState.Data -> {
                             _uiState.value =
-                                _uiState.value.copy(search = state.data, users = currentUsers)
+                                _uiState.value.copy(search = state.data, users = currentUsers, isSearchData = true, isSearchError = false, isSearchLoading = false)
                         }
-                        is DataState.Error -> {}
-                        is DataState.Loading -> {}
+
+                        is DataState.Error -> {
+                            _uiState.value = _uiState.value.copy(
+                                isSearchError = true,
+                                isSearchLoading = false,
+                                isSearchData = false
+                            )
+                        }
+
+                        is DataState.Loading -> {
+                            _uiState.value = _uiState.value.copy(
+                                isSearchLoading = true,
+                                isSearchError = false,
+                                isSearchData = false
+                            )
+                        }
                     }
                 }
             }

@@ -13,7 +13,10 @@ import javax.inject.Inject
 
 data class UserDetailUiData(
     val user: UserDetail? = null,
-    val repos: List<Repos>
+    val repos: List<Repos>,
+    val isLoading: Boolean = true,
+    val isData: Boolean = false,
+    val isError: Boolean = false
 )
 
 @HiltViewModel
@@ -30,11 +33,21 @@ class UserDetailViewModel @Inject constructor(
             userDetailUseCase.invoke(name).collect { state ->
                 when (state) {
                     is DataState.Data -> {
-                        _uiState.value = _uiState.value.copy(user = state.data)
+                        _uiState.value = _uiState.value.copy(
+                            user = state.data,
+                            isData = true,
+                            isLoading = false,
+                            isError = false
+                        )
                     }
 
-                    is DataState.Error -> {}
-                    is DataState.Loading -> {}
+                    is DataState.Error -> {
+                        _uiState.value = _uiState.value.copy(isError = true, isLoading = false)
+                    }
+
+                    is DataState.Loading -> {
+                        _uiState.value = _uiState.value.copy(isLoading = true)
+                    }
                 }
             }
         }

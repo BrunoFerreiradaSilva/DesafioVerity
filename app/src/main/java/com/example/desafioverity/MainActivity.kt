@@ -53,8 +53,8 @@ class MainActivity : ComponentActivity() {
                     viewModel.getAllUsers()
                 }
 
-                Users(state = state.value.users, search = state.value.search, Modifier, navigateToDetails = { nameUser ->
-                    navHostController.navigate("${Routes.Details.route}/${nameUser}") {
+                Users(state = state.value, Modifier, navigateToDetails = { nameUser ->
+                    navHostController.navigate("${Routes.Details.route}/torvalds") {
                         navHostController.graph.startDestinationRoute?.let { route ->
                             popUpTo(route) {
                                 saveState = true
@@ -81,8 +81,7 @@ class MainActivity : ComponentActivity() {
                 }
 
                 UserDetail(
-                    user = state.value.user,
-                    repos = state.value.repos,
+                    state = state.value,
                     modifier = Modifier
                 )
             }
