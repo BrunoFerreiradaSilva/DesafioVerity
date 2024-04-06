@@ -27,33 +27,14 @@ class UserViewModel @Inject constructor(private val useCase: UserUseCase) : View
         }
     }
 
-    private fun getAllUsers(state: DataState<List<User>>){
-        when(state){
+    private fun getAllUsers(state: DataState<List<User>>) {
+        when (state) {
             is DataState.Data -> {
                 _uiState.value = _uiState.value.copy(users = state.data)
             }
+
             is DataState.Error -> {}
             is DataState.Loading -> {}
-        }
-    }
-
-    fun getMoreUsers(){
-        viewModelScope.launch {
-            val updateList = mutableListOf<User>()
-            val currentList = _uiState.value.users
-            val nexPage = _uiState.value.page + 1
-
-            useCase.invoke(nexPage).collect { state ->
-                when(state){
-                    is DataState.Data -> {
-                        updateList.addAll(currentList)
-                        updateList.addAll(state.data)
-                        _uiState.value = _uiState.value.copy(users = updateList, page = nexPage)
-                    }
-                    is DataState.Error -> {}
-                    is DataState.Loading -> {}
-                }
-            }
         }
     }
 }

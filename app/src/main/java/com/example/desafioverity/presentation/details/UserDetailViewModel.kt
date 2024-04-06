@@ -44,10 +44,11 @@ class UserDetailViewModel @Inject constructor(
     fun getAllRepos(name: String) {
         viewModelScope.launch {
             repoUseCase.invoke(name).collect { state ->
-                when(state){
+                when (state) {
                     is DataState.Data -> {
                         _uiState.value = _uiState.value.copy(repos = state.data)
                     }
+
                     is DataState.Error -> {}
                     is DataState.Loading -> {}
                 }

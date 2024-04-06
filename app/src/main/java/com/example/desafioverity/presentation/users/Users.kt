@@ -3,17 +3,12 @@ package com.example.desafioverity.presentation.users
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
-import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.Text
@@ -33,8 +28,13 @@ import com.example.desafioverity.data.model.User
 import kotlinx.coroutines.flow.distinctUntilChanged
 
 @Composable
-fun Users(state: List<User>, modifier: Modifier, navigateToDetails: (String) -> Unit, updateUsers:()->Unit) {
-    LazyVerticalGrid( columns = GridCells.Fixed(3), modifier = modifier.fillMaxWidth()) {
+fun Users(
+    state: List<User>,
+    modifier: Modifier,
+    navigateToDetails: (String) -> Unit,
+    updateUsers: () -> Unit
+) {
+    LazyVerticalGrid(columns = GridCells.Fixed(3), modifier = modifier.fillMaxWidth()) {
         items(state) {
             Card(
                 modifier = modifier
@@ -43,14 +43,21 @@ fun Users(state: List<User>, modifier: Modifier, navigateToDetails: (String) -> 
                 shape = RoundedCornerShape(8.dp),
             ) {
                 Row {
-                    AsyncImage(model = it.avatarUrl, contentDescription = "", modifier.size(120.dp).fillMaxWidth())
+                    AsyncImage(
+                        model = it.avatarUrl,
+                        contentDescription = "",
+                        modifier
+                            .size(120.dp)
+                            .fillMaxWidth()
+                    )
                 }
                 Row {
                     Text(
                         text = it.login,
                         modifier = modifier
                             .align(Alignment.CenterVertically)
-                            .padding(vertical = 8.dp).fillMaxWidth(),
+                            .padding(vertical = 8.dp)
+                            .fillMaxWidth(),
                         textAlign = TextAlign.Center,
                         fontSize = 14.sp
                     )
@@ -58,39 +65,6 @@ fun Users(state: List<User>, modifier: Modifier, navigateToDetails: (String) -> 
             }
         }
     }
-}
-
-@Composable
-fun Pagination(
-    listState: LazyListState,
-    buffer: Int = 2,
-    action: () -> Unit,
-
-    ) {
-    var lastTotalItems = -1
-    val loadMore = remember {
-        derivedStateOf {
-            val layoutInfo = listState.layoutInfo
-            val totalItemsNumber = layoutInfo.totalItemsCount
-            val lastVisibleItemIndex =
-                (layoutInfo.visibleItemsInfo.lastOrNull()?.index ?: 0) + 1
-            val loadMore =
-                lastVisibleItemIndex > (totalItemsNumber - buffer) && (lastTotalItems != totalItemsNumber)
-
-            loadMore
-        }
-    }
-    LaunchedEffect(loadMore) {
-        snapshotFlow { loadMore.value }
-            .distinctUntilChanged()
-            .collect {
-                if (it) {
-                    lastTotalItems = listState.layoutInfo.totalItemsCount
-                    action()
-                }
-            }
-    }
-
 }
 
 @Preview(showSystemUi = true)

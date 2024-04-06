@@ -8,15 +8,15 @@ data class UserDetailDto(
     @SerializedName("avatar_url")
     val avatarUrl: String,
     @SerializedName("name")
-    val name:String,
+    val name: String,
     @SerializedName("company")
-    val company:String,
+    val company: String,
     @SerializedName("location")
-    val location:String,
+    val location: String,
     @SerializedName("public_repos")
-    val publicRepos:Int,
+    val publicRepos: Int,
     @SerializedName("followers")
-    val followers:Int,
+    val followers: Int,
     @SerializedName("following")
-    val following:Int
-    )
+    val following: Int
+)

@@ -16,7 +16,7 @@ class ReposRepositoryImpl @Inject constructor(private val service: Service) : Re
                 Repos(
                     id = repo.id,
                     nodeId = repo.nodeId,
-                    name= repo.name,
+                    name = repo.name,
                     fullName = repo.fullName,
                     private = repo.private,
                     owner = repo.owner,

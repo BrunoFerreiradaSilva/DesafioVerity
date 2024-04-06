@@ -70,10 +70,12 @@ fun UserDetail(
                         }
                     }
                     Row(modifier.padding(start = 8.dp, top = 8.dp)) {
-                        Icon(painterResource(id = R.drawable.icon_work), contentDescription = "",
+                        Icon(
+                            painterResource(id = R.drawable.icon_work), contentDescription = "",
                             modifier
                                 .size(14.dp)
-                                .align(Alignment.CenterVertically))
+                                .align(Alignment.CenterVertically)
+                        )
                         user?.company?.let {
                             Text(
                                 text = it,
@@ -152,16 +154,19 @@ fun UserDetail(
                     Row(
                         modifier
                             .padding(vertical = 4.dp)
-                            .fillMaxWidth()){
+                            .fillMaxWidth()
+                    ) {
                         Text(
                             text = it.name,
                             modifier = modifier
                                 .padding(horizontal = 10.dp, vertical = 2.dp),
                             textAlign = TextAlign.Center
                         )
-                        Spacer(modifier = modifier
-                            .weight(1f)
-                            .height(0.dp))
+                        Spacer(
+                            modifier = modifier
+                                .weight(1f)
+                                .height(0.dp)
+                        )
                         Text(
                             text = it.visibility,
                             modifier = modifier
@@ -178,7 +183,12 @@ fun UserDetail(
                     }
                     Row {
                         Row(modifier.padding(start = 8.dp, bottom = 8.dp)) {
-                            Icon(imageVector = Icons.Outlined.Check, contentDescription = "", modifier.size(14.dp), tint = Color.Gray)
+                            Icon(
+                                imageVector = Icons.Outlined.Check,
+                                contentDescription = "",
+                                modifier.size(14.dp),
+                                tint = Color.Gray
+                            )
                             Text(
                                 text = it.language,
                                 modifier = modifier.padding(horizontal = 2.dp),
@@ -187,7 +197,12 @@ fun UserDetail(
                             )
                         }
                         Row(modifier.padding(start = 8.dp, bottom = 8.dp)) {
-                            Icon(painterResource(id = R.drawable.git_fork_svgrepo_com), contentDescription = "", modifier.size(14.dp), tint = Color.Gray)
+                            Icon(
+                                painterResource(id = R.drawable.git_fork_svgrepo_com),
+                                contentDescription = "",
+                                modifier.size(14.dp),
+                                tint = Color.Gray
+                            )
                             Text(
                                 text = it.forks.toString(),
                                 modifier = modifier.padding(horizontal = 2.dp),
@@ -196,7 +211,12 @@ fun UserDetail(
                             )
                         }
                         Row(modifier.padding(start = 8.dp, bottom = 8.dp)) {
-                            Icon(imageVector = Icons.Default.Star, contentDescription = "", modifier.size(14.dp), tint = Color.Gray)
+                            Icon(
+                                imageVector = Icons.Default.Star,
+                                contentDescription = "",
+                                modifier.size(14.dp),
+                                tint = Color.Gray
+                            )
                             Text(
                                 text = it.size.toString(),
                                 modifier = modifier.padding(horizontal = 2.dp),
@@ -205,7 +225,12 @@ fun UserDetail(
                             )
                         }
                         Row(modifier.padding(start = 8.dp, bottom = 8.dp)) {
-                            Icon(painterResource(id = R.drawable.icon_eye), contentDescription = "", modifier.size(14.dp), tint = Color.Gray)
+                            Icon(
+                                painterResource(id = R.drawable.icon_eye),
+                                contentDescription = "",
+                                modifier.size(14.dp),
+                                tint = Color.Gray
+                            )
                             Text(
                                 text = it.watchers.toString(),
                                 modifier = modifier.padding(horizontal = 2.dp),

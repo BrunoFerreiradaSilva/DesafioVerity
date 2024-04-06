@@ -5,5 +5,5 @@ import com.example.desafioverity.domain.helpers.DataState
 import kotlinx.coroutines.flow.Flow
 
 interface ReposRepository {
-    fun getAllRepos(name:String): Flow<DataState<List<Repos>>>
+    fun getAllRepos(name: String): Flow<DataState<List<Repos>>>
 }

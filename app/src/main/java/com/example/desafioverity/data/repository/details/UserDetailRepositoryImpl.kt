@@ -8,8 +8,9 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
-class UserDetailRepositoryImpl @Inject constructor(private val service: Service) : UserDetailRepository {
-    override fun userDetail(userName: String) : Flow<DataState<UserDetail>>  = flow{
+class UserDetailRepositoryImpl @Inject constructor(private val service: Service) :
+    UserDetailRepository {
+    override fun userDetail(userName: String): Flow<DataState<UserDetail>> = flow {
         emit(DataState.Loading(LoadingState.Loading))
         try {
             val result = service.getUserDetail(userName)
@@ -25,7 +26,7 @@ class UserDetailRepositoryImpl @Inject constructor(private val service: Service)
             )
 
             emit(DataState.Data(data = user))
-        } catch (error:Exception){
+        } catch (error: Exception) {
             emit(DataState.Error(error = error))
         }
     }

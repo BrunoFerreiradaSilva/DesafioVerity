@@ -50,16 +50,17 @@ fun NavGraph(navHostController: NavHostController) {
             val viewModel = hiltViewModel<UserViewModel>()
             val state = viewModel.uiState.collectAsState()
             Users(state = state.value.users, Modifier, navigateToDetails = {
-                navHostController.navigate("${Routes.Details.route}/torvalds"){
+                navHostController.navigate("${Routes.Details.route}/torvalds") {
                     launchSingleTop = true
                     restoreState = true
-                }}) {
+                }
+            }) {
 
             }
         }
         composable(
-            route ="${Routes.Details.route}/{nameUser}"
-        ){
+            route = "${Routes.Details.route}/{nameUser}"
+        ) {
             val nameUser = it.arguments?.getString("nameUser")
             val viewModel = hiltViewModel<UserDetailViewModel>()
             nameUser?.let { user ->

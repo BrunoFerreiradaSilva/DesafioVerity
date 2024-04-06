@@ -5,7 +5,6 @@ import com.example.desafioverity.data.response.UserDetailDto
 import com.example.desafioverity.data.response.UserDto
 import retrofit2.http.GET
 import retrofit2.http.Path
-import retrofit2.http.Query
 
 interface Service {
 
