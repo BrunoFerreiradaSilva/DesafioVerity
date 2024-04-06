@@ -15,11 +15,12 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.desafioverity.domain.navigation.Routes
-import com.example.desafioverity.presentation.UserViewModel
+import com.example.desafioverity.presentation.details.UserDetail
+import com.example.desafioverity.presentation.details.UserDetailViewModel
+import com.example.desafioverity.presentation.users.UserViewModel
 import com.example.desafioverity.presentation.users.Users
 import com.example.desafioverity.ui.theme.DesafioVerityTheme
 import dagger.hilt.android.AndroidEntryPoint
-import dagger.hilt.android.lifecycle.HiltViewModel
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -48,8 +49,23 @@ fun NavGraph(navHostController: NavHostController) {
         ) {
             val viewModel = hiltViewModel<UserViewModel>()
             val state = viewModel.uiState.collectAsState()
-            Users(state = state.value.users, Modifier, navigateToDetails = {}) {
-                viewModel.getMoreUsers()
+            Users(state = state.value.users, Modifier, navigateToDetails = {
+                navHostController.navigate("${Routes.Details.route}/torvalds"){
+                    launchSingleTop = true
+                    restoreState = true
+                }}) {
+
+            }
+        }
+        composable(
+            route ="${Routes.Details.route}/{nameUser}"
+        ){
+            val nameUser = it.arguments?.getString("nameUser")
+            val viewModel = hiltViewModel<UserDetailViewModel>()
+            nameUser?.let { it1 -> viewModel.getDetailUser(it1) }
+            val state = viewModel.uiState.collectAsState()
+            UserDetail(user = state.value.user, modifier = Modifier) {
+
             }
         }
     }
