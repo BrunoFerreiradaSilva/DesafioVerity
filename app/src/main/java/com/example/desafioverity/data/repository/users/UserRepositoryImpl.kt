@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
 class UserRepositoryImpl @Inject constructor(private val service: Service) : UsersRepository {
-    override fun getAllUsers(page: Int): Flow<DataState<List<User>>> = flow {
+    override fun getAllUsers(): Flow<DataState<List<User>>> = flow {
         emit(DataState.Loading(loadingState = LoadingState.Loading))
         try {
             val users = service.getAllUsers().map {

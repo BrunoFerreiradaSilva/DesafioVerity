@@ -5,11 +5,14 @@ import com.example.desafioverity.data.response.UserDetailDto
 import com.example.desafioverity.data.response.UserDto
 import retrofit2.http.GET
 import retrofit2.http.Path
+import retrofit2.http.Query
 
 interface Service {
 
     @GET("/users")
-    suspend fun getAllUsers(): List<UserDto>
+    suspend fun getAllUsers(
+        @Query("per_page") page:Int = 100
+    ): List<UserDto>
 
     @GET("/users/{username}")
     suspend fun getUserDetail(
