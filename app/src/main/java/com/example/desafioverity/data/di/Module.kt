@@ -2,6 +2,8 @@ package com.example.desafioverity.data.di
 
 import com.example.desafioverity.data.repository.details.UserDetailRepository
 import com.example.desafioverity.data.repository.details.UserDetailRepositoryImpl
+import com.example.desafioverity.data.repository.repos.ReposRepository
+import com.example.desafioverity.data.repository.repos.ReposRepositoryImpl
 import com.example.desafioverity.data.repository.users.UserRepositoryImpl
 import com.example.desafioverity.data.repository.users.UsersRepository
 import com.example.desafioverity.data.service.Service
@@ -32,6 +34,11 @@ object Module {
         service: Service
     ): UserDetailRepository{
         return UserDetailRepositoryImpl(service)
+    }
+
+    @Provides
+    fun provideRepoRepository(service: Service):ReposRepository{
+        return ReposRepositoryImpl(service)
     }
 
     @Provides
