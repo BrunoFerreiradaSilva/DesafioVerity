@@ -1,8 +1,8 @@
-package com.example.desafioverity.data.entity
+package com.example.desafioverity.data.response
 
 import com.google.gson.annotations.SerializedName
 
-data class UserEntity(
+data class UserDto (
     val login: String,
     val id: Int,
     @SerializedName("node_id")

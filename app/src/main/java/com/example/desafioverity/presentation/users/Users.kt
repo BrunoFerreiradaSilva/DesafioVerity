@@ -22,18 +22,17 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
-import com.example.desafioverity.data.entity.UserEntity
-import com.example.desafioverity.presentation.UserUiData
+import com.example.desafioverity.data.model.User
 import kotlinx.coroutines.flow.distinctUntilChanged
 
 @Composable
-fun Users(state: List<UserEntity>, modifier: Modifier, navigateToDetails: () -> Unit, updateUsers:()->Unit) {
+fun Users(state: List<User>, modifier: Modifier, navigateToDetails: (String) -> Unit, updateUsers:()->Unit) {
     val lazyListState = rememberLazyListState()
     LazyColumn(modifier = modifier.fillMaxWidth()) {
         items(state) {
             Card(
                 modifier = modifier
-                    .clickable { navigateToDetails() }
+                    .clickable { navigateToDetails(it.login) }
                     .fillMaxWidth()
                     .padding(horizontal = 8.dp, vertical = 8.dp),
                 shape = RoundedCornerShape(16.dp),
@@ -92,7 +91,7 @@ fun Pagination(
 @Preview(showSystemUi = true)
 @Composable
 fun PreviewUsers() {
-    val users = UserEntity(
+    val users = User(
         login = "Brunoooo",
         id = 222,
         nodeId = "UHASUHAUAHS",
