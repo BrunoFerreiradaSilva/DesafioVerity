@@ -62,9 +62,12 @@ fun NavGraph(navHostController: NavHostController) {
         ){
             val nameUser = it.arguments?.getString("nameUser")
             val viewModel = hiltViewModel<UserDetailViewModel>()
-            nameUser?.let { it1 -> viewModel.getDetailUser(it1) }
+            nameUser?.let { user ->
+                viewModel.getDetailUser(user)
+                viewModel.getAllRepos(user)
+            }
             val state = viewModel.uiState.collectAsState()
-            UserDetail(user = state.value.user, modifier = Modifier) {
+            UserDetail(user = state.value.user, repos = state.value.repos, modifier = Modifier) {
 
             }
         }
