@@ -4,6 +4,7 @@ import com.example.desafioverity.data.model.UserDetail
 import com.example.desafioverity.data.service.Service
 import com.example.desafioverity.domain.helpers.DataState
 import com.example.desafioverity.domain.helpers.LoadingState
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
@@ -12,6 +13,7 @@ class UserDetailRepositoryImpl @Inject constructor(private val service: Service)
     UserDetailRepository {
     override fun userDetail(userName: String): Flow<DataState<UserDetail>> = flow {
         emit(DataState.Loading(LoadingState.Loading))
+        delay(5000)
         try {
             val result = service.getUserDetail(userName)
             val user = UserDetail(

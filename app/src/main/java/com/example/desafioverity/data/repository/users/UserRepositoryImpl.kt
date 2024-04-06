@@ -4,6 +4,7 @@ import com.example.desafioverity.data.model.User
 import com.example.desafioverity.data.service.Service
 import com.example.desafioverity.domain.helpers.DataState
 import com.example.desafioverity.domain.helpers.LoadingState
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
@@ -11,6 +12,7 @@ import javax.inject.Inject
 class UserRepositoryImpl @Inject constructor(private val service: Service) : UsersRepository {
     override fun getAllUsers(): Flow<DataState<List<User>>> = flow {
         emit(DataState.Loading(loadingState = LoadingState.Loading))
+        delay(5000)
         try {
             val users = service.getAllUsers().map {
                 User(
