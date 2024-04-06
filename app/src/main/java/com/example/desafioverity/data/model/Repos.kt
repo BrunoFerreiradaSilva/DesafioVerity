@@ -18,7 +18,7 @@ data class Repos(
     val forks: Int,
     val watchers: Int,
     val visibility: String,
-    val updatedAt: Long,
+    val updatedAt: Date,
     val stargazersCount:Int,
     val watchersCount: Int
 )

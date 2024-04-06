@@ -27,7 +27,7 @@ class ReposRepositoryImpl @Inject constructor(private val service: Service) : Re
                     forks = repo.forks,
                     watchers = repo.watchers,
                     visibility = repo.visibility,
-                    updatedAt = repo.updatedAt.time,
+                    updatedAt = repo.updatedAt,
                     stargazersCount = repo.stargazersCount,
                     watchersCount = repo.watchersCount
                 )
