@@ -88,7 +88,7 @@ class UserViewModel @Inject constructor(
                         }
 
                         is DataState.Loading -> {
-                            searchLoadding()
+                            searchLoading()
                         }
                     }
                 }
@@ -97,7 +97,7 @@ class UserViewModel @Inject constructor(
 
     }
 
-    private fun searchLoadding() {
+    private fun searchLoading() {
         _uiState.value = _uiState.value.copy(
             isError = false,
             isSearchLoading = true,
