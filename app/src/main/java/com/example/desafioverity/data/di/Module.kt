@@ -2,13 +2,11 @@ package com.example.desafioverity.data.di
 
 import com.example.desafioverity.data.repository.details.UserDetailRepository
 import com.example.desafioverity.data.repository.details.UserDetailRepositoryImpl
-import com.example.desafioverity.data.repository.repos.ReposRepository
-import com.example.desafioverity.data.repository.repos.ReposRepositoryImpl
+import com.example.desafioverity.data.repository.repos.UserRepoRepository
+import com.example.desafioverity.data.repository.repos.UserRepoRepositoryImpl
 import com.example.desafioverity.data.repository.users.UserRepositoryImpl
 import com.example.desafioverity.data.repository.users.UsersRepository
 import com.example.desafioverity.data.service.Service
-import com.example.desafioverity.domain.helpers.BASE_URL
-import com.example.desafioverity.domain.helpers.BASE_URL2
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -18,6 +16,9 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
+
+private const val BASE_URL = "https://api.github.com"
+private const val BASE_URL2 = "http://demo7690382.mockable.io/"
 
 @InstallIn(SingletonComponent::class)
 @Module
@@ -33,13 +34,13 @@ object Module {
     @Provides
     fun provideUserDetailRepository(
         service: Service
-    ): UserDetailRepository{
+    ): UserDetailRepository {
         return UserDetailRepositoryImpl(service)
     }
 
     @Provides
-    fun provideRepoRepository(service: Service):ReposRepository{
-        return ReposRepositoryImpl(service)
+    fun provideRepoRepository(service: Service): UserRepoRepository {
+        return UserRepoRepositoryImpl(service)
     }
 
     @Provides
@@ -50,7 +51,7 @@ object Module {
             .build()
 
         return Retrofit.Builder()
-            .baseUrl(BASE_URL2)
+            .baseUrl(BASE_URL)
             .client(
                 client
             )
