@@ -1,6 +1,6 @@
 package com.example.desafioverity.data.repository.users
 
-import com.example.desafioverity.data.model.User
+import com.example.desafioverity.domain.model.User
 import com.example.desafioverity.data.service.Service
 import com.example.desafioverity.domain.helpers.DataState
 import com.example.desafioverity.domain.helpers.LoadingState
@@ -30,14 +30,14 @@ class UserRepositoryImpl @Inject constructor(private val service: Service) : Use
     override fun getUser(name: String): Flow<DataState<List<User>>> = flow {
         emit(DataState.Loading(loadingState = LoadingState.Loading))
         try {
-            val result = service.getUser(name).items.map {userDto -> User(
-                id = userDto.id,
-                login = userDto.login,
-                nodeId = userDto.nodeId,
-                avatarUrl = userDto.avatarUrl
-            )}
-
-
+            val result = service.getUser(name).items.map { userDto ->
+                User(
+                    id = userDto.id,
+                    login = userDto.login,
+                    nodeId = userDto.nodeId,
+                    avatarUrl = userDto.avatarUrl
+                )
+            }
             emit(DataState.Data(data = result))
         } catch (error: Exception) {
             emit(DataState.Error(error = error))
