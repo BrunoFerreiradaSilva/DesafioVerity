@@ -1,15 +1,14 @@
 package com.example.desafioverity.data.repository.repos
 
-import com.example.desafioverity.data.model.Repos
+import com.example.desafioverity.domain.model.Repos
 import com.example.desafioverity.data.service.Service
 import com.example.desafioverity.domain.helpers.DataState
 import com.example.desafioverity.domain.helpers.LoadingState
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
-class ReposRepositoryImpl @Inject constructor(private val service: Service) : ReposRepository {
+class UserRepoRepositoryImpl @Inject constructor(private val service: Service) : UserRepoRepository {
     override fun getAllRepos(name: String): Flow<DataState<List<Repos>>> = flow {
         emit(DataState.Loading(LoadingState.Loading))
         try {
