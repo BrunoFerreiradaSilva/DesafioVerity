@@ -18,7 +18,6 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
 private const val BASE_URL = "https://api.github.com"
-private const val BASE_URL2 = "http://demo7690382.mockable.io/"
 
 @InstallIn(SingletonComponent::class)
 @Module
