@@ -15,6 +15,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.desafioverity.domain.helpers.RELOAD_SEARCH
 import com.example.desafioverity.domain.navigation.Routes
 import com.example.desafioverity.presentation.details.UserDetail
 import com.example.desafioverity.presentation.details.UserDetailViewModel
@@ -65,8 +66,9 @@ class MainActivity : ComponentActivity() {
                     }
                 }, searchUser = {
                     viewModel.searchUser(it)
-                }, tryAgain = {
-                    viewModel.getAllUsers()
+                }, tryAgain = { tryAgainInAllUsers ->
+                    if (tryAgainInAllUsers) viewModel.getAllUsers()
+                    else viewModel.searchUser(RELOAD_SEARCH)
                 })
             }
             composable(

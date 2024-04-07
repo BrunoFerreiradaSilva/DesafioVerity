@@ -21,6 +21,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.desafioverity.presentation.component.UserLazyColumComponent
 import com.example.desafioverity.presentation.stateScreen.error.ErrorScreenState
+import com.example.desafioverity.presentation.stateScreen.error.SearchNotFountState
 import com.example.desafioverity.presentation.stateScreen.loading.SearchLoading
 import com.example.desafioverity.presentation.stateScreen.loading.UsersLoading
 
@@ -31,7 +32,7 @@ fun Users(
     modifier: Modifier,
     navigateToDetails: (String) -> Unit,
     searchUser: (String) -> Unit,
-    tryAgain: () -> Unit
+    tryAgain: (Boolean) -> Unit
 ) {
     if (state.isLoading) {
         UsersLoading(modifier = modifier)
@@ -39,7 +40,7 @@ fun Users(
 
     if (state.isError) {
         ErrorScreenState(modifier = modifier) {
-            tryAgain()
+            tryAgain(true)
         }
     }
 
@@ -89,10 +90,14 @@ fun Users(
                     SearchLoading(modifier = modifier)
                 }
 
-                if (state.isSearchError) {
+                if (state.isError) {
                     ErrorScreenState(modifier = modifier) {
-                        tryAgain()
+                        tryAgain(false)
                     }
+                }
+
+                if (state.isSearchError){
+                    SearchNotFountState(modifier = modifier)
                 }
 
                 if (state.isSearchData) {
