@@ -26,6 +26,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -42,12 +43,12 @@ fun UserDetail(
     modifier: Modifier,
     tryAgain: () -> Unit
 ) {
-    if (state.isLoading){
+    if (state.isLoading) {
         UserDetailLoading(modifier = modifier)
     }
 
-    if (state.isError){
-        ErrorScreenState(modifier = modifier){
+    if (state.isError) {
+        ErrorScreenState(modifier = modifier) {
             tryAgain()
         }
     }
@@ -57,7 +58,8 @@ fun UserDetail(
             Card(modifier.padding(bottom = 4.dp)) {
                 Row {
                     AsyncImage(
-                        model = state.user?.avatarUrl, contentDescription = "",
+                        model = state.user?.avatarUrl,
+                        contentDescription = stringResource(id = R.string.image_user),
                         modifier
                             .padding(start = 8.dp, top = 8.dp)
                             .size(80.dp)
@@ -82,7 +84,7 @@ fun UserDetail(
                         Row {
                             Icon(
                                 imageVector = Icons.Default.LocationOn,
-                                contentDescription = "",
+                                contentDescription = stringResource(R.string.icon_location),
                                 modifier = modifier
                                     .padding(horizontal = 8.dp)
                                     .size(14.dp)
@@ -103,7 +105,7 @@ fun UserDetail(
                 Row(modifier.padding(horizontal = 8.dp, vertical = 8.dp)) {
                     Icon(
                         imageVector = Icons.Default.Person,
-                        contentDescription = "",
+                        contentDescription = stringResource(R.string.icon_person),
                         modifier.size(20.dp)
                     )
                     state.user?.followers?.let {
@@ -115,7 +117,7 @@ fun UserDetail(
                         )
                     }
                     Text(
-                        text = " Followers - ",
+                        text = stringResource(R.string.followers),
                         modifier = modifier.align(Alignment.CenterVertically),
                         fontSize = 14.sp,
                         textAlign = TextAlign.Center,
@@ -130,7 +132,7 @@ fun UserDetail(
                         )
                     }
                     Text(
-                        text = " Following",
+                        text = stringResource(R.string.following),
                         modifier = modifier.align(Alignment.CenterVertically),
                         fontSize = 14.sp,
                         textAlign = TextAlign.Center,
@@ -182,7 +184,7 @@ fun UserDetail(
                                 if (language.isNotEmpty()) {
                                     Icon(
                                         imageVector = Icons.Outlined.Check,
-                                        contentDescription = "",
+                                        contentDescription = stringResource(R.string.icon_check),
                                         modifier.size(14.dp),
                                         tint = Color.Gray
                                     )
@@ -197,7 +199,7 @@ fun UserDetail(
                             Row(modifier.padding(start = 8.dp, bottom = 8.dp)) {
                                 Icon(
                                     painterResource(id = R.drawable.git_fork_svgrepo_com),
-                                    contentDescription = "",
+                                    contentDescription = stringResource(R.string.icon_fork_github),
                                     modifier.size(14.dp),
                                     tint = Color.Gray
                                 )
@@ -211,7 +213,7 @@ fun UserDetail(
                             Row(modifier.padding(start = 8.dp, bottom = 8.dp)) {
                                 Icon(
                                     imageVector = Icons.Default.Star,
-                                    contentDescription = "",
+                                    contentDescription = stringResource(R.string.icon_star),
                                     modifier.size(14.dp),
                                     tint = Color.Gray
                                 )
@@ -225,7 +227,7 @@ fun UserDetail(
                             Row(modifier.padding(start = 8.dp, bottom = 8.dp)) {
                                 Icon(
                                     painterResource(id = R.drawable.icon_eye),
-                                    contentDescription = "",
+                                    contentDescription = stringResource(R.string.icon_eye),
                                     modifier.size(14.dp),
                                     tint = Color.Gray
                                 )
@@ -239,7 +241,7 @@ fun UserDetail(
                         }
                         Row(modifier.padding(start = 8.dp, bottom = 8.dp)) {
                             Text(
-                                text = "Update on",
+                                text = stringResource(R.string.update_on),
                                 modifier = modifier.padding(horizontal = 2.dp),
                                 textAlign = TextAlign.Center,
                                 fontSize = 12.sp

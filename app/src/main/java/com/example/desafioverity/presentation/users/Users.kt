@@ -18,11 +18,12 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.example.desafioverity.R
 import com.example.desafioverity.presentation.component.UserLazyColumComponent
 import com.example.desafioverity.presentation.stateScreen.error.ErrorScreenState
 import com.example.desafioverity.presentation.stateScreen.error.SearchNotFountState
-import com.example.desafioverity.presentation.stateScreen.loading.SearchLoading
 import com.example.desafioverity.presentation.stateScreen.loading.UsersLoading
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -62,11 +63,11 @@ fun Users(
                 onActiveChange = {
                     active = it
                 },
-                placeholder = { Text(text = "Search") },
+                placeholder = { Text(text = stringResource(R.string.search)) },
                 leadingIcon = {
                     Icon(
                         imageVector = Icons.Default.Search,
-                        contentDescription = "Search icon"
+                        contentDescription = stringResource(R.string.search_icon)
                     )
                 },
                 trailingIcon = {
@@ -81,13 +82,13 @@ fun Users(
                                 }
                             },
                             imageVector = Icons.Default.Clear,
-                            contentDescription = "Clear icon"
+                            contentDescription = stringResource(R.string.clear_icon)
                         )
                     }
                 }
             ) {
                 if (state.isSearchLoading) {
-                    SearchLoading(modifier = modifier)
+                    UsersLoading(modifier = modifier)
                 }
 
                 if (state.isError) {

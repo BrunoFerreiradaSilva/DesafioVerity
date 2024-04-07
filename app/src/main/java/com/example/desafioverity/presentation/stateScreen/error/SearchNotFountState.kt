@@ -14,9 +14,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.desafioverity.R
 
 @Composable
 fun SearchNotFountState(modifier: Modifier) {
@@ -28,7 +30,7 @@ fun SearchNotFountState(modifier: Modifier) {
         Row {
             Icon(
                 imageVector = Icons.Default.Clear,
-                contentDescription = "icon error",
+                contentDescription = stringResource(id = R.string.error),
                 modifier = modifier
                     .fillMaxWidth()
                     .size(80.dp),
@@ -37,7 +39,7 @@ fun SearchNotFountState(modifier: Modifier) {
         }
         Row {
             Text(
-                text = "Nenhum usuario encontrado",
+                text = stringResource(R.string.no_user_found),
                 modifier = modifier.fillMaxWidth(),
                 textAlign = TextAlign.Center
             )

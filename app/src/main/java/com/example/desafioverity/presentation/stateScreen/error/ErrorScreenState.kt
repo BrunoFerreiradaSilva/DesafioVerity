@@ -16,10 +16,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.desafioverity.R
 
 @Composable
 fun ErrorScreenState(modifier: Modifier, tryAgain: () -> Unit) {
@@ -31,7 +33,7 @@ fun ErrorScreenState(modifier: Modifier, tryAgain: () -> Unit) {
         ) {
             Icon(
                 imageVector = Icons.Default.Clear,
-                contentDescription = "",
+                contentDescription = stringResource(R.string.icon_error),
                 tint = Color.Red,
                 modifier = modifier
                     .fillMaxWidth()
@@ -42,7 +44,7 @@ fun ErrorScreenState(modifier: Modifier, tryAgain: () -> Unit) {
                 modifier
                     .fillMaxWidth()) {
                 Text(
-                    text = "Error :'(",
+                    text = stringResource(R.string.error),
                     textAlign = TextAlign.Center,
                     fontSize = 28.sp,
                     modifier = modifier.fillMaxWidth()
@@ -54,7 +56,7 @@ fun ErrorScreenState(modifier: Modifier, tryAgain: () -> Unit) {
                     .align(Alignment.CenterHorizontally)
                     .padding(top = 12.dp)
             ) {
-                Text(text = "Retry")
+                Text(text = stringResource(R.string.retry))
             }
         }
 
