@@ -3,7 +3,7 @@ package com.example.desafioverity.data.response
 import com.google.gson.annotations.SerializedName
 import java.util.Date
 
-data class ReposDto(
+data class RepoDTO(
     @SerializedName("id")
     val id: Int,
     @SerializedName("node_id")
@@ -15,7 +15,7 @@ data class ReposDto(
     @SerializedName("private")
     val private: Boolean,
     @SerializedName("owner")
-    val owner: UserDto,
+    val owner: UserDTO,
     @SerializedName("avatar_url")
     val avatarUrl: String?,
     @SerializedName("description")

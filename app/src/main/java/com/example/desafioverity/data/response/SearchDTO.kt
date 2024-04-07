@@ -4,5 +4,5 @@ import com.google.gson.annotations.SerializedName
 
 data class SearchDTO(
     @SerializedName("items")
-    val items: List<UserDto>
+    val items: List<UserDTO>
 )

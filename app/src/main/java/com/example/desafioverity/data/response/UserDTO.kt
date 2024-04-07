@@ -2,7 +2,7 @@ package com.example.desafioverity.data.response
 
 import com.google.gson.annotations.SerializedName
 
-data class UserDto(
+data class UserDTO(
     @SerializedName("login")
     val login: String,
     @SerializedName("id")
