@@ -22,9 +22,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.desafioverity.R
 import com.example.desafioverity.presentation.component.UserLazyColumComponent
-import com.example.desafioverity.presentation.stateScreen.error.ErrorScreenState
-import com.example.desafioverity.presentation.stateScreen.error.SearchNotFountState
-import com.example.desafioverity.presentation.stateScreen.loading.UsersLoading
+import com.example.desafioverity.presentation.component.ErrorScreenState
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -98,7 +96,7 @@ fun Users(
                 }
 
                 if (state.isSearchError){
-                    SearchNotFountState(modifier = modifier)
+                    SearchNotFoundState(modifier = modifier)
                 }
 
                 if (state.isSearchData) {

@@ -1,4 +1,4 @@
-package com.example.desafioverity.data.model
+package com.example.desafioverity.domain.model
 
 data class UserDetail(
     val login: String,

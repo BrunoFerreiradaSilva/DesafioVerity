@@ -1,4 +1,4 @@
-package com.example.desafioverity.presentation.stateScreen.loading
+package com.example.desafioverity.presentation.users
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Row

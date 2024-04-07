@@ -21,7 +21,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.example.desafioverity.R
-import com.example.desafioverity.data.model.User
+import com.example.desafioverity.domain.model.User
 
 @Composable
 fun UserLazyColumComponent(

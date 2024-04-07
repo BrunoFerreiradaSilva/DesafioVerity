@@ -2,9 +2,11 @@ package com.example.desafioverity.presentation.details
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.desafioverity.data.model.Repos
-import com.example.desafioverity.data.model.UserDetail
+import com.example.desafioverity.domain.model.Repos
+import com.example.desafioverity.domain.model.UserDetail
 import com.example.desafioverity.domain.helpers.DataState
+import com.example.desafioverity.domain.usecases.ListUserReposUseCase
+import com.example.desafioverity.domain.usecases.GetUserDetailsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -21,8 +23,8 @@ data class UserDetailUiData(
 
 @HiltViewModel
 class UserDetailViewModel @Inject constructor(
-    private val userDetailUseCase: UserDetailUseCase,
-    private val repoUseCase: RepoUseCase
+    private val getUserDetailsUseCase: GetUserDetailsUseCase,
+    private val listUserReposUseCase: ListUserReposUseCase
 ) : ViewModel() {
     private val _uiState: MutableStateFlow<UserDetailUiData> =
         MutableStateFlow(UserDetailUiData(repos = emptyList()))
@@ -30,7 +32,7 @@ class UserDetailViewModel @Inject constructor(
 
     fun getDetailUser(name: String) {
         viewModelScope.launch {
-            userDetailUseCase.invoke(name).collect { state ->
+            getUserDetailsUseCase.invoke(name).collect { state ->
                 when (state) {
                     is DataState.Data -> {
                         _uiState.value = _uiState.value.copy(
@@ -55,7 +57,7 @@ class UserDetailViewModel @Inject constructor(
 
     fun getAllRepos(name: String) {
         viewModelScope.launch {
-            repoUseCase.invoke(name).collect { state ->
+            listUserReposUseCase.invoke(name).collect { state ->
                 when (state) {
                     is DataState.Data -> {
                         _uiState.value = _uiState.value.copy(repos = state.data)

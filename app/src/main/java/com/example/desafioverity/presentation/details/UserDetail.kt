@@ -34,8 +34,8 @@ import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.example.desafioverity.R
 import com.example.desafioverity.domain.helpers.showDataConvertingString
-import com.example.desafioverity.presentation.stateScreen.error.ErrorScreenState
-import com.example.desafioverity.presentation.stateScreen.loading.UserDetailLoading
+import com.example.desafioverity.domain.model.Repos
+import com.example.desafioverity.presentation.component.ErrorScreenState
 
 @Composable
 fun UserDetail(
@@ -142,121 +142,126 @@ fun UserDetail(
             }
             LazyColumn(modifier = modifier.fillMaxWidth()) {
                 items(state.repos) {
-                    Card(
-                        modifier = modifier
-                            .fillMaxWidth()
-                            .padding(vertical = 4.dp),
-                        shape = RoundedCornerShape(8.dp),
-                    ) {
-                        Row(
-                            modifier
-                                .padding(vertical = 4.dp)
-                                .fillMaxWidth()
-                        ) {
-                            Text(
-                                text = it.name,
-                                modifier = modifier
-                                    .padding(horizontal = 10.dp, vertical = 2.dp),
-                                textAlign = TextAlign.Center
-                            )
-                            Spacer(
-                                modifier = modifier
-                                    .weight(1f)
-                                    .height(0.dp)
-                            )
-                            Text(
-                                text = it.visibility,
-                                modifier = modifier
-                                    .border(
-                                        width = 2.dp,
-                                        color = Color.Gray,
-                                        shape = ShapeDefaults.ExtraLarge
-                                    )
-                                    .padding(horizontal = 10.dp, vertical = 4.dp),
-                                textAlign = TextAlign.Center,
-                                fontSize = 10.sp
-                            )
-                            Spacer(modifier = modifier.padding(end = 12.dp))
-                        }
-                        Row {
-                            Row(modifier.padding(start = 8.dp, bottom = 8.dp)) {
-                                val language = if (it.language.isNullOrBlank()) "" else it.language
-                                if (language.isNotEmpty()) {
-                                    Icon(
-                                        imageVector = Icons.Outlined.Check,
-                                        contentDescription = stringResource(R.string.icon_check),
-                                        modifier.size(14.dp),
-                                        tint = Color.Gray
-                                    )
-                                    Text(
-                                        text = language,
-                                        modifier = modifier.padding(horizontal = 2.dp),
-                                        textAlign = TextAlign.Center,
-                                        fontSize = 12.sp
-                                    )
-                                }
-                            }
-                            Row(modifier.padding(start = 8.dp, bottom = 8.dp)) {
-                                Icon(
-                                    painterResource(id = R.drawable.git_fork_svgrepo_com),
-                                    contentDescription = stringResource(R.string.icon_fork_github),
-                                    modifier.size(14.dp),
-                                    tint = Color.Gray
-                                )
-                                Text(
-                                    text = it.forks.toString(),
-                                    modifier = modifier.padding(horizontal = 2.dp),
-                                    textAlign = TextAlign.Center,
-                                    fontSize = 12.sp
-                                )
-                            }
-                            Row(modifier.padding(start = 8.dp, bottom = 8.dp)) {
-                                Icon(
-                                    imageVector = Icons.Default.Star,
-                                    contentDescription = stringResource(R.string.icon_star),
-                                    modifier.size(14.dp),
-                                    tint = Color.Gray
-                                )
-                                Text(
-                                    text = it.size.toString(),
-                                    modifier = modifier.padding(horizontal = 2.dp),
-                                    textAlign = TextAlign.Center,
-                                    fontSize = 12.sp
-                                )
-                            }
-                            Row(modifier.padding(start = 8.dp, bottom = 8.dp)) {
-                                Icon(
-                                    painterResource(id = R.drawable.icon_eye),
-                                    contentDescription = stringResource(R.string.icon_eye),
-                                    modifier.size(14.dp),
-                                    tint = Color.Gray
-                                )
-                                Text(
-                                    text = it.watchers.toString(),
-                                    modifier = modifier.padding(horizontal = 2.dp),
-                                    textAlign = TextAlign.Center,
-                                    fontSize = 12.sp
-                                )
-                            }
-                        }
-                        Row(modifier.padding(start = 8.dp, bottom = 8.dp)) {
-                            Text(
-                                text = stringResource(R.string.update_on),
-                                modifier = modifier.padding(horizontal = 2.dp),
-                                textAlign = TextAlign.Center,
-                                fontSize = 12.sp
-                            )
-                            Text(
-                                text = it.updatedAt.showDataConvertingString(),
-                                modifier = modifier.padding(horizontal = 2.dp),
-                                textAlign = TextAlign.Center,
-                                fontSize = 12.sp
-                            )
-                        }
-
-                    }
+                    UserRepository(modifier = modifier, repo = it)
                 }
             }
         }
+    }
+}
+
+@Composable
+fun UserRepository(modifier: Modifier, repo: Repos) {
+    Card(
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(vertical = 4.dp),
+        shape = RoundedCornerShape(8.dp),
+    ) {
+        Row(
+            modifier
+                .padding(vertical = 4.dp)
+                .fillMaxWidth()
+        ) {
+            Text(
+                text = repo.name,
+                modifier = modifier
+                    .padding(horizontal = 10.dp, vertical = 2.dp),
+                textAlign = TextAlign.Center
+            )
+            Spacer(
+                modifier = modifier
+                    .weight(1f)
+                    .height(0.dp)
+            )
+            Text(
+                text = repo.visibility,
+                modifier = modifier
+                    .border(
+                        width = 2.dp,
+                        color = Color.Gray,
+                        shape = ShapeDefaults.ExtraLarge
+                    )
+                    .padding(horizontal = 10.dp, vertical = 4.dp),
+                textAlign = TextAlign.Center,
+                fontSize = 10.sp
+            )
+            Spacer(modifier = modifier.padding(end = 12.dp))
+        }
+        Row {
+            Row(modifier.padding(start = 8.dp, bottom = 8.dp)) {
+                val language = if (repo.language.isNullOrBlank()) "" else repo.language
+                if (language.isNotEmpty()) {
+                    Icon(
+                        imageVector = Icons.Outlined.Check,
+                        contentDescription = stringResource(R.string.icon_check),
+                        modifier.size(14.dp),
+                        tint = Color.Gray
+                    )
+                    Text(
+                        text = language,
+                        modifier = modifier.padding(horizontal = 2.dp),
+                        textAlign = TextAlign.Center,
+                        fontSize = 12.sp
+                    )
+                }
+            }
+            Row(modifier.padding(start = 8.dp, bottom = 8.dp)) {
+                Icon(
+                    painterResource(id = R.drawable.git_fork_svgrepo_com),
+                    contentDescription = stringResource(R.string.icon_fork_github),
+                    modifier.size(14.dp),
+                    tint = Color.Gray
+                )
+                Text(
+                    text = repo.forks.toString(),
+                    modifier = modifier.padding(horizontal = 2.dp),
+                    textAlign = TextAlign.Center,
+                    fontSize = 12.sp
+                )
+            }
+            Row(modifier.padding(start = 8.dp, bottom = 8.dp)) {
+                Icon(
+                    imageVector = Icons.Default.Star,
+                    contentDescription = stringResource(R.string.icon_star),
+                    modifier.size(14.dp),
+                    tint = Color.Gray
+                )
+                Text(
+                    text = repo.size.toString(),
+                    modifier = modifier.padding(horizontal = 2.dp),
+                    textAlign = TextAlign.Center,
+                    fontSize = 12.sp
+                )
+            }
+            Row(modifier.padding(start = 8.dp, bottom = 8.dp)) {
+                Icon(
+                    painterResource(id = R.drawable.icon_eye),
+                    contentDescription = stringResource(R.string.icon_eye),
+                    modifier.size(14.dp),
+                    tint = Color.Gray
+                )
+                Text(
+                    text = repo.watchers.toString(),
+                    modifier = modifier.padding(horizontal = 2.dp),
+                    textAlign = TextAlign.Center,
+                    fontSize = 12.sp
+                )
+            }
+        }
+        Row(modifier.padding(start = 8.dp, bottom = 8.dp)) {
+            Text(
+                text = stringResource(R.string.update_on),
+                modifier = modifier.padding(horizontal = 2.dp),
+                textAlign = TextAlign.Center,
+                fontSize = 12.sp
+            )
+            Text(
+                text = repo.updatedAt.showDataConvertingString(),
+                modifier = modifier.padding(horizontal = 2.dp),
+                textAlign = TextAlign.Center,
+                fontSize = 12.sp
+            )
+        }
+
     }
 }

@@ -1,4 +1,4 @@
-package com.example.desafioverity.presentation.stateScreen.error
+package com.example.desafioverity.presentation.users
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -21,7 +21,7 @@ import androidx.compose.ui.unit.dp
 import com.example.desafioverity.R
 
 @Composable
-fun SearchNotFountState(modifier: Modifier) {
+fun SearchNotFoundState(modifier: Modifier) {
     Column(
         modifier = modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -49,6 +49,6 @@ fun SearchNotFountState(modifier: Modifier) {
 
 @Composable
 @Preview(showSystemUi = true)
-fun PreviewSearchNotFountState() {
-    SearchNotFountState(Modifier)
+fun PreviewSearchNotFoundState() {
+    SearchNotFoundState(Modifier)
 }

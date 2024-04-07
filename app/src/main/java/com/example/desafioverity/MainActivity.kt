@@ -15,10 +15,10 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.desafioverity.domain.helpers.RELOAD_SEARCH
-import com.example.desafioverity.domain.navigation.Routes
 import com.example.desafioverity.presentation.details.UserDetail
 import com.example.desafioverity.presentation.details.UserDetailViewModel
+import com.example.desafioverity.presentation.navigation.Routes
+import com.example.desafioverity.presentation.users.RELOAD_SEARCH
 import com.example.desafioverity.presentation.users.UserViewModel
 import com.example.desafioverity.presentation.users.Users
 import com.example.desafioverity.ui.theme.DesafioVerityTheme
@@ -50,12 +50,9 @@ class MainActivity : ComponentActivity() {
             ) {
                 val viewModel = hiltViewModel<UserViewModel>()
                 val state = viewModel.uiState.collectAsState()
-                LaunchedEffect(key1 = state) {
-                    viewModel.getAllUsers()
-                }
 
                 Users(state = state.value, Modifier, navigateToDetails = { nameUser ->
-                    navHostController.navigate("${Routes.Details.route}/torvalds") {
+                    navHostController.navigate("${Routes.Details.route}/${nameUser}") {
                         navHostController.graph.startDestinationRoute?.let { route ->
                             popUpTo(route) {
                                 saveState = true

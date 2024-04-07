@@ -1,4 +1,4 @@
-package com.example.desafioverity.presentation.stateScreen.error
+package com.example.desafioverity.presentation.component
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column

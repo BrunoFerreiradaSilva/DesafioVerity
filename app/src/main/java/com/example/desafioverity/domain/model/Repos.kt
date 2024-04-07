@@ -1,6 +1,6 @@
-package com.example.desafioverity.data.model
+package com.example.desafioverity.domain.model
 
-import com.example.desafioverity.data.response.UserDto
+import com.example.desafioverity.data.response.UserDTO
 import java.util.Date
 
 data class Repos(
@@ -9,7 +9,7 @@ data class Repos(
     val name: String,
     val fullName: String,
     val private: Boolean,
-    val owner: UserDto,
+    val owner: UserDTO,
     val avatarUrl: String?,
     val description: String?,
     val size: Int,
