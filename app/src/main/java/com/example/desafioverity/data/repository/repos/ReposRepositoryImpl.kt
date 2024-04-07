@@ -12,7 +12,6 @@ import javax.inject.Inject
 class ReposRepositoryImpl @Inject constructor(private val service: Service) : ReposRepository {
     override fun getAllRepos(name: String): Flow<DataState<List<Repos>>> = flow {
         emit(DataState.Loading(LoadingState.Loading))
-        delay(5000)
         try {
             val result = service.getAllRepos(name).map { repo ->
                 Repos(

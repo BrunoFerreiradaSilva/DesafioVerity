@@ -13,7 +13,6 @@ class UserDetailRepositoryImpl @Inject constructor(private val service: Service)
     UserDetailRepository {
     override fun userDetail(userName: String): Flow<DataState<UserDetail>> = flow {
         emit(DataState.Loading(LoadingState.Loading))
-        delay(5000)
         try {
             val result = service.getUserDetail(userName)
             val user = UserDetail(

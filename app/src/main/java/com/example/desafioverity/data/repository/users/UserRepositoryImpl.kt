@@ -12,7 +12,6 @@ import javax.inject.Inject
 class UserRepositoryImpl @Inject constructor(private val service: Service) : UsersRepository {
     override fun getAllUsers(): Flow<DataState<List<User>>> = flow {
         emit(DataState.Loading(loadingState = LoadingState.Loading))
-        delay(5000)
         try {
             val users = service.getAllUsers().map {
                 User(
