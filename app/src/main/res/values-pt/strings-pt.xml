@@ -17,4 +17,8 @@
     <string name="search">Buscar</string>
     <string name="search_icon">Icone buscar</string>
     <string name="clear_icon">Icone limpar</string>
+    <string name="request_limit_exceeded">Limite de chamadas atingindas</string>
+    <string name="try_again_in">Tente novamente as %s</string>
+    <string name="no_repositories_found">Nenhum repositorio encontrado, ou todos eles são privaados</string>
+
 </resources>
