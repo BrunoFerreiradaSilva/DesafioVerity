@@ -1,7 +1,9 @@
 package com.example.desafioverity.data.di
 
+import HeaderInterceptor
 import com.example.desafioverity.data.repository.details.UserDetailRepository
 import com.example.desafioverity.data.repository.details.UserDetailRepositoryImpl
+import com.example.desafioverity.data.repository.preferences.UserPreferenceRepository
 import com.example.desafioverity.data.repository.repos.UserRepoRepository
 import com.example.desafioverity.data.repository.repos.UserRepoRepositoryImpl
 import com.example.desafioverity.data.repository.users.UserRepositoryImpl
@@ -25,27 +27,32 @@ object Module {
 
     @Provides
     fun providesUserRepository(
-        service: Service
+        service: Service,
+        userPreferencesRepository: UserPreferenceRepository
     ): UsersRepository {
-        return UserRepositoryImpl(service)
+        return UserRepositoryImpl(service, userPreferencesRepository)
     }
 
     @Provides
     fun provideUserDetailRepository(
-        service: Service
+        service: Service,
+        userPreferencesRepository: UserPreferenceRepository
     ): UserDetailRepository {
-        return UserDetailRepositoryImpl(service)
+        return UserDetailRepositoryImpl(service, userPreferencesRepository)
     }
 
     @Provides
-    fun provideRepoRepository(service: Service): UserRepoRepository {
-        return UserRepoRepositoryImpl(service)
+    fun provideRepoRepository(
+        service: Service, userPreferencesRepository: UserPreferenceRepository
+    ): UserRepoRepository {
+        return UserRepoRepositoryImpl(service, userPreferencesRepository)
     }
 
     @Provides
-    fun providesRetrofit(): Service {
+    fun providesRetrofit(userPreferencesRepository: UserPreferenceRepository): Service {
         val client = OkHttpClient.Builder()
             .readTimeout(1, TimeUnit.MINUTES)
+            .addInterceptor(HeaderInterceptor(userPreferencesRepository))
             .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
             .build()
 
