@@ -145,7 +145,8 @@ fun UserDetail(
                     )
                 }
             }
-            LazyColumn(modifier = modifier.fillMaxWidth()) {
+            if (state.repos.isEmpty()) ReposNotFound(modifier)
+            else LazyColumn(modifier = modifier.fillMaxWidth()) {
                 items(state.repos) {
                     UserRepository(modifier = modifier, repo = it)
                 }
