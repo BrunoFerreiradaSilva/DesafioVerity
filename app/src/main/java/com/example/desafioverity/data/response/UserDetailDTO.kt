@@ -6,13 +6,13 @@ data class UserDetailDTO(
     @SerializedName("login")
     val login: String,
     @SerializedName("avatar_url")
-    val avatarUrl: String,
+    val avatarUrl: String?,
     @SerializedName("name")
-    val name: String,
+    val name: String?,
     @SerializedName("company")
-    val company: String,
+    val company: String?,
     @SerializedName("location")
-    val location: String,
+    val location: String?,
     @SerializedName("public_repos")
     val publicRepos: Int,
     @SerializedName("followers")

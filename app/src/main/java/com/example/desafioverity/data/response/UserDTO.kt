@@ -8,7 +8,7 @@ data class UserDTO(
     @SerializedName("id")
     val id: Int,
     @SerializedName("node_id")
-    val nodeId: String,
+    val nodeId: String?,
     @SerializedName("avatar_url")
-    val avatarUrl: String
+    val avatarUrl: String?
 )

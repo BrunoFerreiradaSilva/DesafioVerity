@@ -7,9 +7,9 @@ data class RepoDTO(
     @SerializedName("id")
     val id: Int,
     @SerializedName("node_id")
-    val nodeId: String,
+    val nodeId: String?,
     @SerializedName("name")
-    val name: String,
+    val name: String?,
     @SerializedName("full_name")
     val fullName: String,
     @SerializedName("private")
@@ -19,17 +19,17 @@ data class RepoDTO(
     @SerializedName("avatar_url")
     val avatarUrl: String?,
     @SerializedName("description")
-    val description: String,
+    val description: String?,
     @SerializedName("size")
     val size: Int,
     @SerializedName("language")
-    val language: String,
+    val language: String?,
     @SerializedName("forks")
     val forks: Int,
     @SerializedName("watchers")
     val watchers: Int,
     @SerializedName("visibility")
-    val visibility: String,
+    val visibility: String?,
     @SerializedName("updated_at")
     val updatedAt: Date,
     @SerializedName("stargazers_count")
