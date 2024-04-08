@@ -2,6 +2,7 @@ package com.example.desafioverity.presentation.users
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.desafioverity.data.repository.preferences.UserPreferenceRepository
 import com.example.desafioverity.domain.helpers.DataState
 import com.example.desafioverity.domain.model.User
 import com.example.desafioverity.domain.usecases.ListUsersUseCase
@@ -10,6 +11,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import java.util.Date
 import javax.inject.Inject
 
 const val RELOAD_SEARCH = "reloadSearch"
@@ -22,13 +24,16 @@ data class UserUiData(
     val isError: Boolean = false,
     val isSearchData: Boolean = false,
     val isSearchLoading: Boolean = false,
-    val isSearchError: Boolean = false
+    val isSearchError: Boolean = false,
+    val limitRequest: Boolean = false,
+    val dateForNewRequest: String = ""
 )
 
 @HiltViewModel
 class UserViewModel @Inject constructor(
     private val listUsersUseCase: ListUsersUseCase,
-    private val searchUserByNameUseCase: SearchUserByNameUseCase
+    private val searchUserByNameUseCase: SearchUserByNameUseCase,
+    private val userPreferenceRepository: UserPreferenceRepository
 ) : ViewModel() {
     private val _uiState: MutableStateFlow<UserUiData> =
         MutableStateFlow(UserUiData(users = emptyList(), search = emptyList()))
@@ -39,7 +44,7 @@ class UserViewModel @Inject constructor(
         getAllUsers()
     }
 
-    fun getAllUsers(){
+    fun getAllUsers() {
         viewModelScope.launch {
             listUsersUseCase.invoke().collect(::handleUserResult)
         }
@@ -53,18 +58,43 @@ class UserViewModel @Inject constructor(
                     users = state.data,
                     isData = true,
                     isLoading = false,
-                    isError = false
+                    isError = false,
+                    limitRequest = false
                 )
             }
 
             is DataState.Error -> {
                 _uiState.value =
-                    _uiState.value.copy(isError = true, isLoading = false, isData = false)
+                    _uiState.value.copy(
+                        isError = true,
+                        isLoading = false,
+                        isData = false,
+                        limitRequest = false
+                    )
             }
 
             is DataState.Loading -> {
                 _uiState.value =
-                    _uiState.value.copy(isLoading = true, isError = false, isData = false)
+                    _uiState.value.copy(
+                        isLoading = true,
+                        isError = false,
+                        isData = false,
+                        limitRequest = false
+                    )
+            }
+
+            is DataState.Limit -> {
+                viewModelScope.launch {
+                    userPreferenceRepository.getTimeForNewRequest.collect {
+                        _uiState.value = _uiState.value.copy(
+                            isLoading = true,
+                            isError = false,
+                            isData = false,
+                            limitRequest = true,
+                            dateForNewRequest = it
+                        )
+                    }
+                }
             }
         }
     }
@@ -100,11 +130,29 @@ class UserViewModel @Inject constructor(
                         is DataState.Loading -> {
                             searchLoading()
                         }
+
+                        is DataState.Limit -> {
+                            limitRequest()
+                        }
                     }
                 }
             }
         }
 
+    }
+
+    private fun limitRequest() {
+        viewModelScope.launch {
+            userPreferenceRepository.getTimeForNewRequest.collect {
+                _uiState.value = _uiState.value.copy(
+                    isLoading = true,
+                    isError = false,
+                    isData = false,
+                    limitRequest = true,
+                    dateForNewRequest = it
+                )
+            }
+        }
     }
 
     private fun searchLoading() {

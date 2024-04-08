@@ -1,5 +1,6 @@
 package com.example.desafioverity.presentation.users
 
+import DialogLimitRequest
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -33,6 +34,9 @@ fun Users(
     searchUser: (String) -> Unit,
     tryAgain: (Boolean) -> Unit
 ) {
+    DialogLimitRequest(showDialog = state.limitRequest, dateForRequest = state.dateForNewRequest) {
+
+    }
     if (state.isLoading) {
         UsersLoading(modifier = modifier)
     }
@@ -85,6 +89,9 @@ fun Users(
                     }
                 }
             ) {
+                DialogLimitRequest(showDialog = state.limitRequest, dateForRequest = state.dateForNewRequest) {
+
+                }
                 if (state.isSearchLoading) {
                     UsersLoading(modifier = modifier)
                 }
