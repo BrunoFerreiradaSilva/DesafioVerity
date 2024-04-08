@@ -1,0 +1,24 @@
+<resources>
+    <string name="app_name">DesafioVerity</string>
+    <string name="image_user">Imagem do usuario</string>
+    <string name="update_on">Atualizado em</string>
+    <string name="icon_eye">Icone de olho</string>
+    <string name="icon_star">Icone de estrela</string>
+    <string name="icon_fork_github">Icone copiar branch github</string>
+    <string name="icon_check">Icone de checado</string>
+    <string name="following">" Seguindo"</string>
+    <string name="followers">" Seguidores - "</string>
+    <string name="icon_person">Icone pessoa</string>
+    <string name="icon_location">Icone localização</string>
+    <string name="retry">Tente novamente</string>
+    <string name="error">Error</string>
+    <string name="icon_error">icone error</string>
+    <string name="no_user_found">Nenhum usuário encontrado</string>
+    <string name="search">Buscar</string>
+    <string name="search_icon">Icone buscar</string>
+    <string name="clear_icon">Icone limpar</string>
+    <string name="request_limit_exceeded">Limite de chamadas atingindas</string>
+    <string name="try_again_in">Tente novamente as %s</string>
+    <string name="no_repositories_found">Nenhum repositorio encontrado, ou todos eles são privaados</string>
+
+</resources>
