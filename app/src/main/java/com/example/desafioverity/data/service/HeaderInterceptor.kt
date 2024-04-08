@@ -20,14 +20,12 @@ class HeaderInterceptor(private val userPreferenceRepository: UserPreferenceRepo
         val timeForReset = response.header("X-RateLimit-Reset")
 
         remaining?.let {
-            println("Requisições restantes: $it")
             scope.launch {
                 userPreferenceRepository.saveRemaining(it)
             }
         }
 
         timeForReset?.let {
-            println("Tempo para resetar: ${convertUnixTimestamp(it.toLong())}")
             scope.launch {
                 userPreferenceRepository.saveTimeNewRequest(convertUnixTimestamp(it.toLong()))
             }

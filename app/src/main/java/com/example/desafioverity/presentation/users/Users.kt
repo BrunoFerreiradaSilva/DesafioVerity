@@ -48,7 +48,7 @@ fun Users(
     }
 
     if (state.isData) {
-        var text by remember { mutableStateOf("") }
+        var search by remember { mutableStateOf("") }
         var active by remember { mutableStateOf(false) }
         Column {
             SearchBar(
@@ -56,8 +56,8 @@ fun Users(
                     .fillMaxWidth()
                     .padding(horizontal = 8.dp),
                 shape = ShapeDefaults.Small,
-                query = text,
-                onQueryChange = { text = it },
+                query = search,
+                onQueryChange = { search = it },
                 onSearch = {
                     searchUser(it)
                 },
@@ -76,8 +76,8 @@ fun Users(
                     if (active) {
                         Icon(
                             modifier = modifier.clickable {
-                                if (text.isNotEmpty()) {
-                                    text = ""
+                                if (search.isNotEmpty()) {
+                                    search = ""
                                     searchUser("")
                                 } else {
                                     active = false
